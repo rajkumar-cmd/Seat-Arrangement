@@ -6,18 +6,6 @@ function App() {
   const [number, setnumber] = useState()
   const [data, setdata] = useState([])
 
-  const handleSubmit = async () => {
-    try {
-      let res = await axios.post(`https://dull-puce-starfish-tie.cyclic.app/`, { number: number })
-      console.log(res.data)
-      alert(res.data.position)
-    }
-    catch (err) {
-      console.log(err)
-      alert("Error Occured")
-    }
-  }
-  
   useEffect(() => {
     const getData = async () => {
       let result = await axios.get(`https://dull-puce-starfish-tie.cyclic.app/`)
@@ -29,6 +17,18 @@ function App() {
   const handleValue=(e)=>{
     setnumber(e.target.value);
   }
+  
+  const handleSubmit = async () => {
+    try {
+      let res = await axios.post(`https://dull-puce-starfish-tie.cyclic.app/`, { number: number })
+      console.log(res.data)
+      alert(res.data.position)
+    }
+    catch (err) {
+      console.log(err)
+      alert("Error Occured")
+    }
+  }
 
   return (
     <div style={{margin:"2rem 0rem"}}>
@@ -37,7 +37,7 @@ function App() {
         <button onClick={handleSubmit}>Book</button>
       </div>
       <div id={Style.container}>
-        {data && data.map((el) => (
+        {data?.map((el) => (
           <div style={{ backgroundColor: el.empty ? "red" : "green" }} key={el.seatNo}>{el.seatPos + 1}</div>
         ))}
       </div>
